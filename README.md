@@ -1,59 +1,103 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Todo List API — Laravel Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is the backend API for a Todo List application built with Laravel 12 and MySQL.
+It provides complete CRUD functionality along with PDF file upload support.
 
-## About Laravel
+This backend is used by the Next.js frontend of the Todo App.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+✔ Create Task (with optional PDF upload)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+✔ View All Tasks
 
-## Learning Laravel
+✔ View Single Task
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+✔ Update Task (including replacing PDF)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+✔ Delete Task
 
-## Laravel Sponsors
+✔ Handles file storage securely
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+✔ RESTful JSON API
 
-### Premium Partners
+| Layer        | Technology                    |
+| ------------ | ----------------------------- |
+| Backend      | Laravel 12                    |
+| Database     | MySQL                         |
+| File Uploads | Laravel Storage (public disk) |
+| API Format   | JSON                          |
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+⚙️ Installation & Setup
 
-## Contributing
+Follow the steps below to set up the backend locally.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1️⃣ Install Dependencies
+composer install
 
-## Code of Conduct
+2️⃣ Environment Setup
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+cp .env.example .env
 
-## Security Vulnerabilities
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=todo_db       # change as needed
+DB_USERNAME=root          # your MySQL user
+DB_PASSWORD=              # your MySQL password
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3️⃣ Generate App Key
+php artisan key:generate
 
-## License
+4️⃣ Run Database Migrations
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+5️⃣ Set Storage Permissions
+php artisan storage:link
+
+This allows serving uploaded PDFs via:
+/storage/<filename>
+
+6️⃣ Start the Development Server
+php artisan serve
+
+Your API will be available at:
+http://127.0.0.1:8000/api
+
+
+📡 API Endpoints
+Get all tasks
+GET /api/todos
+
+Get a single task
+GET /api/todos/{id}
+
+Create a task
+POST /api/todos
+
+Body (multipart/form-data):
+
+title — string
+details — string (optional)
+file — PDF file (optional)
+
+Update a task
+POST /api/todos/{id}
+Body (multipart/form-data):
+
+Same as create
+Optional new PDF replaces old one
+
+
+Delete a task
+DELETE /api/todos/{id}
+
+
+🧪 Testing the API
+
+You can use:
+Postman
+Thunder Client (VS Code)
+
+Remember to send multipart/form-data for file uploads.
+
+
